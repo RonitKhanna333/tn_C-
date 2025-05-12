@@ -1,0 +1,12 @@
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\bin\Debug\net9.0\EncryptionCore.deps.json
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\bin\Debug\net9.0\EncryptionCore.dll
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\bin\Debug\net9.0\EncryptionCore.pdb
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\obj\Debug\net9.0\EncryptionCore.csproj.AssemblyReference.cache
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\obj\Debug\net9.0\EncryptionCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\obj\Debug\net9.0\EncryptionCore.AssemblyInfoInputs.cache
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\obj\Debug\net9.0\EncryptionCore.AssemblyInfo.cs
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\obj\Debug\net9.0\EncryptionCore.csproj.CoreCompileInputs.cache
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\obj\Debug\net9.0\EncryptionCore.dll
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\obj\Debug\net9.0\refint\EncryptionCore.dll
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\obj\Debug\net9.0\EncryptionCore.pdb
+C:\Users\Ronit Khanna\OneDrive\Desktop\TN\EncryptionCore\obj\Debug\net9.0\ref\EncryptionCore.dll

@@ -1,0 +1,252 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="EncryptionUI.MainWindow"
+        Title="Echelon X - Encryption Tool"
+        Width="800" Height="600">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Margin="0,10,0,0" Background="#333333">
+            <TextBlock Text="Echelon X Pre-Release Build" 
+                       FontSize="24" 
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       Margin="10"/>
+        </StackPanel>
+        
+        <TabControl>
+            <TabItem Header="Encrypt Folder">
+                <ScrollViewer>
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Encrypt Folder" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <TextBlock Text="Folder to encrypt:" VerticalAlignment="Center" Width="150"/>
+                            <TextBox x:Name="SourceFolderTextBox" Width="400" Margin="5,0"/>
+                            <Button x:Name="BrowseSourceButton" Content="Browse..." Margin="5,0"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <TextBlock Text="Encrypted output folder:" VerticalAlignment="Center" Width="150"/>
+                            <TextBox x:Name="DestFolderTextBox" Width="400" Margin="5,0"/>
+                            <Button x:Name="BrowseDestButton" Content="Browse..." Margin="5,0"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <TextBlock Text="Key storage directory:" VerticalAlignment="Center" Width="150"/>
+                            <TextBox x:Name="KeyDirTextBox" Width="400" Margin="5,0"/>
+                            <Button x:Name="BrowseKeyDirButton" Content="Browse..." Margin="5,0"/>
+                        </StackPanel>
+                        
+                        <CheckBox x:Name="UseTPMCheckBox" Content="Use TPM for encryption" Margin="0,10"/>
+                        <CheckBox x:Name="UseAWSCheckBox" Content="Store keys in AWS (Hybrid mode)" Margin="0,5"/>
+                        
+                        <StackPanel x:Name="AWSSettingsPanel" IsVisible="{Binding #UseAWSCheckBox.IsChecked}" Margin="20,10">
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="AWS Secret Name:" VerticalAlignment="Center" Width="150"/>
+                                <TextBox x:Name="AWSSecretNameTextBox" Width="400" Margin="5,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="AWS Region:" VerticalAlignment="Center" Width="150"/>
+                                <TextBox x:Name="AWSRegionTextBox" Width="400" Margin="5,0" Text="us-east-1"/>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <Button x:Name="EncryptButton" 
+                                Content="Start Encryption" 
+                                Background="#1E90FF" 
+                                Foreground="White"
+                                HorizontalAlignment="Center"
+                                Padding="20,10"
+                                Margin="0,20"/>
+                        
+                        <ProgressBar x:Name="EncryptionProgress" Height="20" IsVisible="False" Margin="0,10"/>
+                        <TextBlock x:Name="EncryptionStatus" Margin="0,10"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            
+            <TabItem Header="Decrypt Folder">
+                <ScrollViewer>
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Decrypt Folder" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <TextBlock Text="Encrypted folder:" VerticalAlignment="Center" Width="150"/>
+                            <TextBox x:Name="EncryptedFolderTextBox" Width="400" Margin="5,0"/>
+                            <Button x:Name="BrowseEncryptedButton" Content="Browse..." Margin="5,0"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <TextBlock Text="Decryption output folder:" VerticalAlignment="Center" Width="150"/>
+                            <TextBox x:Name="DecryptedFolderTextBox" Width="400" Margin="5,0"/>
+                            <Button x:Name="BrowseDecryptedButton" Content="Browse..." Margin="5,0"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <TextBlock Text="Key directory:" VerticalAlignment="Center" Width="150"/>
+                            <TextBox x:Name="DecryptKeyDirTextBox" Width="400" Margin="5,0"/>
+                            <Button x:Name="BrowseDecryptKeyDirButton" Content="Browse..." Margin="5,0"/>
+                        </StackPanel>
+                        
+                        <RadioButton x:Name="UseLocalKeysRadio" Content="Use local keys" IsChecked="True" Margin="0,10"/>
+                        <RadioButton x:Name="UseTPMKeysRadio" Content="Use TPM keys" Margin="0,5"/>
+                        <RadioButton x:Name="UseAWSKeysRadio" Content="Use AWS keys" Margin="0,5"/>
+                        <RadioButton x:Name="UseHybridKeysRadio" Content="Use Hybrid (TPM+AWS) keys" Margin="0,5"/>
+                        
+                        <StackPanel x:Name="DecryptAWSSettingsPanel" 
+                                    IsVisible="{Binding #UseAWSKeysRadio.IsChecked}" 
+                                    Margin="20,10">
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="AWS Key Secret Name:" VerticalAlignment="Center" Width="150"/>
+                                <TextBox x:Name="AWSKeySecretTextBox" Width="400" Margin="5,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="AWS Shares Secret Name:" VerticalAlignment="Center" Width="150"/>
+                                <TextBox x:Name="AWSSharesSecretTextBox" Width="400" Margin="5,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="AWS Region:" VerticalAlignment="Center" Width="150"/>
+                                <TextBox x:Name="DecryptAWSRegionTextBox" Width="400" Margin="5,0" Text="us-east-1"/>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <Button x:Name="DecryptButton" 
+                                Content="Start Decryption" 
+                                Background="#1E90FF" 
+                                Foreground="White"
+                                HorizontalAlignment="Center"
+                                Padding="20,10"
+                                Margin="0,20"/>
+                        
+                        <ProgressBar x:Name="DecryptionProgress" Height="20" IsVisible="False" Margin="0,10"/>
+                        <TextBlock x:Name="DecryptionStatus" Margin="0,10"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            
+            <TabItem Header="Key Management">
+                <ScrollViewer>
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Key Management" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+                        
+                        <Border BorderBrush="LightGray" BorderThickness="1" Padding="10" Margin="0,5">
+                            <StackPanel>
+                                <TextBlock Text="Generate RSA Keys" FontWeight="Bold" Margin="0,0,0,10"/>
+                                
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="Key output directory:" VerticalAlignment="Center" Width="150"/>
+                                    <TextBox x:Name="KeyOutputDirTextBox" Width="400" Margin="5,0"/>
+                                    <Button x:Name="BrowseKeyOutputDirButton" Content="Browse..." Margin="5,0"/>
+                                </StackPanel>
+                                
+                                <Button x:Name="GenerateRSAButton" 
+                                        Content="Generate RSA Keys" 
+                                        HorizontalAlignment="Left"
+                                        Margin="0,10"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border BorderBrush="LightGray" BorderThickness="1" Padding="10" Margin="0,15,0,5">
+                            <StackPanel>
+                                <TextBlock Text="AWS Key Management" FontWeight="Bold" Margin="0,0,0,10"/>
+                                
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="AWS Region:" VerticalAlignment="Center" Width="150"/>
+                                    <TextBox x:Name="KeyManagementRegionTextBox" Width="400" Margin="5,0" Text="us-east-1"/>
+                                </StackPanel>
+                                
+                                <Expander Header="Store RSA Key in AWS" Margin="0,5">
+                                    <StackPanel Margin="0,5">
+                                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                            <TextBlock Text="Key directory:" VerticalAlignment="Center" Width="150"/>
+                                            <TextBox x:Name="AWSKeyDirTextBox" Width="400" Margin="5,0"/>
+                                            <Button x:Name="BrowseAWSKeyDirButton" Content="Browse..." Margin="5,0"/>
+                                        </StackPanel>
+                                        
+                                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                            <TextBlock Text="AWS Secret Name:" VerticalAlignment="Center" Width="150"/>
+                                            <TextBox x:Name="StoreKeySecretNameTextBox" Width="400" Margin="5,0"/>
+                                        </StackPanel>
+                                        
+                                        <Button x:Name="StoreKeyButton" 
+                                                Content="Store RSA Key in AWS" 
+                                                HorizontalAlignment="Left"
+                                                Margin="0,10"/>
+                                    </StackPanel>
+                                </Expander>
+                                
+                                <Expander Header="Store Key Shares in AWS" Margin="0,5">
+                                    <StackPanel Margin="0,5">
+                                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                            <TextBlock Text="Key shares directory:" VerticalAlignment="Center" Width="150"/>
+                                            <TextBox x:Name="KeySharesDirTextBox" Width="400" Margin="5,0"/>
+                                            <Button x:Name="BrowseKeySharesDirButton" Content="Browse..." Margin="5,0"/>
+                                        </StackPanel>
+                                        
+                                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                            <TextBlock Text="AWS Secret Name:" VerticalAlignment="Center" Width="150"/>
+                                            <TextBox x:Name="StoreSharesSecretNameTextBox" Width="400" Margin="5,0"/>
+                                        </StackPanel>
+                                        
+                                        <Button x:Name="StoreSharesButton" 
+                                                Content="Store Key Shares in AWS" 
+                                                HorizontalAlignment="Left"
+                                                Margin="0,10"/>
+                                    </StackPanel>
+                                </Expander>
+                                
+                                <Expander Header="Retrieve Keys from AWS" Margin="0,5">
+                                    <StackPanel Margin="0,5">
+                                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                            <TextBlock Text="Local output directory:" VerticalAlignment="Center" Width="150"/>
+                                            <TextBox x:Name="RetrieveOutputDirTextBox" Width="400" Margin="5,0"/>
+                                            <Button x:Name="BrowseRetrieveOutputDirButton" Content="Browse..." Margin="5,0"/>
+                                        </StackPanel>
+                                        
+                                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                            <TextBlock Text="AWS Key Secret:" VerticalAlignment="Center" Width="150"/>
+                                            <TextBox x:Name="RetrieveKeySecretTextBox" Width="400" Margin="5,0"/>
+                                        </StackPanel>
+                                        
+                                        <Button x:Name="RetrieveKeyButton" 
+                                                Content="Retrieve RSA Key" 
+                                                HorizontalAlignment="Left"
+                                                Margin="0,5"/>
+                                                
+                                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                            <TextBlock Text="AWS Shares Secret:" VerticalAlignment="Center" Width="150"/>
+                                            <TextBox x:Name="RetrieveSharesSecretTextBox" Width="400" Margin="5,0"/>
+                                        </StackPanel>
+                                        
+                                        <Button x:Name="RetrieveSharesButton" 
+                                                Content="Retrieve Key Shares" 
+                                                HorizontalAlignment="Left"
+                                                Margin="0,5"/>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border BorderBrush="LightGray" BorderThickness="1" Padding="10" Margin="0,15,0,5">
+                            <StackPanel>
+                                <TextBlock Text="Delete Local Keys" FontWeight="Bold" Margin="0,0,0,10"/>
+                                
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="Key directory to clean:" VerticalAlignment="Center" Width="150"/>
+                                    <TextBox x:Name="DeleteKeysDirTextBox" Width="400" Margin="5,0"/>
+                                    <Button x:Name="BrowseDeleteKeysDirButton" Content="Browse..." Margin="5,0"/>
+                                </StackPanel>
+                                
+                                <Button x:Name="DeleteLocalKeysButton" 
+                                        Content="Delete Local Keys" 
+                                        HorizontalAlignment="Left"
+                                        Margin="0,10"
+                                        Background="#FF4500"
+                                        Foreground="White"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
